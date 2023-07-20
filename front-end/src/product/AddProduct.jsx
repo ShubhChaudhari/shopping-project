@@ -1,36 +1,49 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import AddBusinessIcon from '@mui/icons-material/AddBusiness';
+import AddBusinessIcon from "@mui/icons-material/AddBusiness";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { AddNewProduct } from "../services/services";
 import { useNavigate } from "react-router-dom";
+import { TextField, Select, MenuItem, FormControl, InputLabel, Button } from '@mui/material';
 
 const AddProduct = ({ open, onClose, onAddProduct }) => {
+  const [productSize, setProductSize] = useState('');
+  const [productColour, setProductColour] = useState('');
   const navigate = useNavigate();
+
+  const handleProductSizeChange = (event) => {
+    setProductSize(event.target.value);
+  };
+
+  const handleProductColourChange = (event) => {
+    setProductColour(event.target.value);
+  };
 
   const handleAddProduct = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // console.log('data.get', data.get)
+    console.log('data.get', data.get("price"))
     const model = {
       name: data.get("name"),
       description: data.get("description"),
       price: data.get("price"),
+      attributes : [{
+        productSize:productSize,
+        productColour:productColour
+      }]
     };
-    console.log('model', model)
+    
+    console.log("model", model);
     const responce = await AddNewProduct(model);
-    console.log('responce', responce)
-    if(responce?.status === 201){
+    console.log("responce", responce);
+    if (responce?.status === 201) {
       navigate("/home");
     }
   };
@@ -50,9 +63,14 @@ const AddProduct = ({ open, onClose, onAddProduct }) => {
           <AddBusinessIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-         Add New Product
+          Add New Product
         </Typography>
-        <Box component="form" noValidate onSubmit={handleAddProduct} sx={{ mt: 3 }}>
+        <Box
+          component="form"
+          noValidate
+          onSubmit={handleAddProduct}
+          sx={{ mt: 3 }}
+        >
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -82,7 +100,38 @@ const AddProduct = ({ open, onClose, onAddProduct }) => {
                 name="price"
               />
             </Grid>
-    
+            {/* <Grid item xs={12}> */}
+              <Grid item xs={6}>
+                <FormControl fullWidth variant="outlined" margin="normal">
+                  <InputLabel>Product Size</InputLabel>
+                  <Select
+                    value={productSize}
+                    onChange={handleProductSizeChange}
+                    label="Product Size"
+                    name="productSize"
+                  >
+                    <MenuItem value="small">Small</MenuItem>
+                    <MenuItem value="medium">Medium</MenuItem>
+                    <MenuItem value="large">Large</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={6}>
+                <FormControl fullWidth variant="outlined" margin="normal">
+                  <InputLabel>Product Colour</InputLabel>
+                  <Select
+                    value={productColour}
+                    onChange={handleProductColourChange}
+                    label="Product Colour"
+                  >
+                    <MenuItem value="red">Red</MenuItem>
+                    <MenuItem value="blue">Blue</MenuItem>
+                    <MenuItem value="green">Green</MenuItem>
+                    <MenuItem value="yellow">Yellow</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+            {/* </Grid> */}
           </Grid>
           <Button
             type="submit"
@@ -94,7 +143,6 @@ const AddProduct = ({ open, onClose, onAddProduct }) => {
           </Button>
         </Box>
       </Box>
-      
     </Container>
   );
 };
