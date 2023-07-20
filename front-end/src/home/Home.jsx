@@ -18,7 +18,7 @@ const Home = () => {
   useEffect(() => {
     productList();
   }, []);
-
+console.log('cartItems', cartItems)
   return (
     <>
       <Navbar />

@@ -29,7 +29,6 @@ export default function SignUp() {
     };
 
     const responce = await Signup(model);
-    console.log('responce', responce)
     if(responce?.status === 201){
       navigate("/login");
     }

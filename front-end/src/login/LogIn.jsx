@@ -13,9 +13,13 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Login } from "../services/services";
+import { useNavigate } from "react-router-dom";
 
 
 export default function LogIn() {
+
+  const navigate = useNavigate();
+
   const handleSubmit = async(event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -26,6 +30,10 @@ export default function LogIn() {
 
     const responce = await Login(model);
     const user = responce.data;
+    localStorage.setItem('authToken', user.token);
+    if(responce?.status === 200){
+      navigate("/home");
+    }
   };
 
   return (
@@ -75,11 +83,8 @@ export default function LogIn() {
               required
               fullWidth
               id="username"
-              label="Username"
-              placeholder="email or mobile number"
+              label="Email or mobile number"
               name="username"
-              autoComplete="username"
-              autoFocus
             />
             <TextField
               margin="normal"
@@ -88,13 +93,7 @@ export default function LogIn() {
               name="password"
               label="Password"
               type="password"
-              placeholder="password"
               id="password"
-              autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
             />
             <Button
               type="submit"

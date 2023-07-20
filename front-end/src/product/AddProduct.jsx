@@ -29,7 +29,6 @@ const AddProduct = ({ open, onClose, onAddProduct }) => {
   const handleAddProduct = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log('data.get', data.get("price"))
     const model = {
       name: data.get("name"),
       description: data.get("description"),
@@ -40,7 +39,6 @@ const AddProduct = ({ open, onClose, onAddProduct }) => {
       }]
     };
     
-    console.log("model", model);
     const responce = await AddNewProduct(model);
     console.log("responce", responce);
     if (responce?.status === 201) {

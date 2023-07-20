@@ -8,10 +8,11 @@ import {
 } from "@mui/material";
 
 const ProductCard = ({ image, title, price, description, setCartItems,product }) => {
-  // const [isAddedToCart, setIsAddedToCart] = useState(false);
+  const [showCart, setShowCart] = useState(false);
 
   const handleAddToCart = () => {
     setCartItems((prevItems) => [...prevItems, product]);
+    setShowCart(true)
   };
 
   return (
