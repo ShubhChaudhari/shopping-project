@@ -6,6 +6,7 @@ import { Container, Grid } from "@mui/material";
 
 const Home = () => {
   const [itemList, setItemList] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
   const productList = async () => {
     try {
       const responce = await Products();
@@ -13,6 +14,7 @@ const Home = () => {
       console.log("responce", responce);
     } catch (error) {}
   };
+
   useEffect(() => {
     productList();
   }, []);
@@ -36,6 +38,8 @@ const Home = () => {
               image={"product.image"}
               title={product.name}
               price={product.price}
+              setCartItems={setCartItems}
+              product={product}
               description={product.description}
               sx={{ margin: 'auto' }}
             />

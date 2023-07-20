@@ -7,12 +7,11 @@ import {
   Button,
 } from "@mui/material";
 
-const ProductCard = ({ image, title, price, description }) => {
-  const [isAddedToCart, setIsAddedToCart] = useState(false);
+const ProductCard = ({ image, title, price, description, setCartItems,product }) => {
+  // const [isAddedToCart, setIsAddedToCart] = useState(false);
 
   const handleAddToCart = () => {
-    setIsAddedToCart(true);
-    // Add your logic here to update the cart or perform any other necessary actions
+    setCartItems((prevItems) => [...prevItems, product]);
   };
 
   return (
@@ -33,10 +32,9 @@ const ProductCard = ({ image, title, price, description }) => {
         variant="contained"
         color="primary"
         fullWidth
-        disabled={isAddedToCart}
         onClick={handleAddToCart}
       >
-        {isAddedToCart ? 'Added to Cart' : 'Add to Cart'}
+       Add to Cart
       </Button>
     </Card>
   );
