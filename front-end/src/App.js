@@ -14,42 +14,15 @@ import Cart from "./cart/Cart";
 import ThankYouPage from "./thank-you/ThankYou";
 import AddProduct from "./product/AddProduct";
 import { useEffect } from "react";
+// import PrivateRoute from "./utils/PrivateRoute";
 
 function App() {
-  const isAuthenticated = () => {
-    // Check if the user is authenticated based on the presence of the token
-    const authToken = localStorage.getItem("authToken");
-    return !!authToken;
-  };
-  console.log("isAuthenticated", isAuthenticated());
-
-  const ProtectedRoute = ({ component: Component, ...rest }) => (
-    <Route
-      {...rest}
-      render={(props) =>
-        isAuthenticated() ? <Component {...props} /> : <Redirect to="/login" />
-      }
-    />
-  );
-
-  useEffect(() => {
-    // Redirect to login if not authenticated (optional)
-    if (!isAuthenticated()) {
-      window.location.href = '/login';
-    }
-  }, []);
 
   return (
     <>
       <Router>
         <Routes>
           <Route path="/" element={<Navigate to="/login" replace={true} />} />
-          {/* <Route
-            path="/home"
-            render={() =>
-              isAuthenticated() ? <Home /> : <LogIn />
-            }
-          /> */}
           <Route path="/login" element={<LogIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/home" element={<Home />} />

@@ -1,9 +1,10 @@
 const router = require("express").Router();
 const Product = require("../model/product");
 const ProductAttribute = require("../model/productAttribute")
+const auth = require("../middleware/auth");
 
 // Get all products
-router.get("/", async (req, res) => {
+router.get("/",auth, async (req, res) => {
   try {
     const products = await Product.find();
     res.status(200).json(products);
@@ -13,7 +14,7 @@ router.get("/", async (req, res) => {
 });
 
 // Get a product by ID
-router.get("/:id", async (req, res) => {
+router.get("/:id",auth, async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
     res.status(200).json(product);
@@ -23,7 +24,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // Create a new product
-router.post("/", async (req, res) => {
+router.post("/",auth, async (req, res) => {
   try {
     const { name, price,description, attributes } = req.body;
     const product = new Product({name, price,description});
@@ -31,11 +32,11 @@ router.post("/", async (req, res) => {
 
     // Create the product attributes
     for (const attribute of attributes) {
-      const { productSize, productColor } = attribute;
+      const { productSize, productColour } = attribute;
       const productAttribute = new ProductAttribute({
         productId: product._id,
         productSize,
-        productColor,
+        productColour,
       });
       await productAttribute.save();
     }
@@ -46,7 +47,7 @@ router.post("/", async (req, res) => {
 });
 
 // Update a product
-router.put("/:id", async (req, res) => {
+router.put("/:id",auth, async (req, res) => {
   try {
     const product = await Product.findByIdAndUpdate(
       req.params.id,
@@ -60,7 +61,7 @@ router.put("/:id", async (req, res) => {
 });
 
 // Delete a product
-router.delete("/:id", async (req, res) => {
+router.delete("/:id",auth, async (req, res) => {
   try {
     await Product.findByIdAndRemove(req.params.id);
     res.status(200).json({ message: "Product deleted successfully" });

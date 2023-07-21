@@ -3,6 +3,7 @@ import { Typography, Button } from "@mui/material";
 import { ShoppingCartOutlined as MuiShoppingCartOutlined } from "@mui/icons-material";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useNavigate } from "react-router-dom";
+import { AddNewOrder } from "../services/services";
 
 const Cart = () => {
 
@@ -19,6 +20,8 @@ const Cart = () => {
     { id: 2, name: "Product 2", price: 20 },
     { id: 3, name: "Product 3", price: 15 },
   ];
+
+
 
   const totalAmount = cartItems.reduce((total, item) => total + item.price, 0);
 
@@ -63,29 +66,27 @@ const Cart = () => {
     }
   }, [success]);
 
+
+  // const handleOrderSubmit = ()=>{
+  //   const User = localStorage.getItem('user');
+  //   const model = {
+  //     userId: User.id,
+  //     totalAmount: totalAmount,
+  //     items : [{
+  //       productId:productId,
+  //       quantity:cartItems.length,
+  //       price:"110000"
+  //     }]
+  //   };
+
+  //   const responce = await AddNewOrder(model);
+  //   console.log("responce", responce);
+  //   if (responce?.status === 201) {
+  //     navigate("/");
+  //   }
+  // }
+
   return (
-    // <div className="bg-gray-100 p-4 rounded-lg shadow">
-    //   <div className="flex items-center mb-4">
-    //     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-primary-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    //       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 17h10a1 1 0 010 2H9a1 1 0 010-2zm2-9a2 2 0 100-4 2 2 0 000 4zM5 19a1 1 0 01-1-1V6a1 1 0 011-1h1M19 19V6m0 13h1a1 1 0 001-1V6a1 1 0 00-1-1h-1" />
-    //     </svg>
-    //     <h2 className="text-xl ml-2">Your Shopping Cart</h2>
-    //   </div>
-    //   <ul>
-    //     {cartItems.map((item) => (
-    //       <li key={item.id} className="flex items-center justify-between mb-2">
-    //         <span>{item.name}</span>
-    //         <span>${item.price}</span>
-    //         <button className="bg-red-500 text-white rounded px-2 py-1">Remove</button>
-    //       </li>
-    //     ))}
-    //   </ul>
-    //   <div className="flex items-center justify-between mt-4">
-    //     <span className="font-semibold">Total:</span>
-    //     <span>20,000</span>
-    //   </div>
-    //   <button className="mt-4 bg-primary-500 text-white rounded px-4 py-2">Checkout</button>
-    // </div>
     <div className="bg-gray-100 p-4 rounded-lg shadow">
       <div className="flex items-center mb-4">
         <MuiShoppingCartOutlined fontSize="large" color="primary" />

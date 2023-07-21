@@ -31,6 +31,7 @@ export default function LogIn() {
     const responce = await Login(model);
     const user = responce.data;
     localStorage.setItem('authToken', user.token);
+    localStorage.setItem('user', user.user);
     if(responce?.status === 200){
       navigate("/home");
     }
